@@ -32,26 +32,6 @@ void load(char* name, Img* pic)
     printf("Load: %d x %d x %d\n", pic->width, pic->height, chan);
 }
 
-void printImage(Img picture) {
-    for(int i = 0; i < picture.width; i++) {
-        for(int j = 0; j < picture.height; j++) {
-            printf("[%02X %02X %02X] ", picture.img[i].r, picture.img[i].g, picture.img[i].b);
-        }
-        printf("\n");
-    }
-}
-
-void desturateImage(Img *picture, int index) {
-    int color = (0.3 * picture->img[index].r + 0.59 * picture->img[index].g + 0.11 * picture->img[index].b);
-
-}
-
-void setColor(RGB *pixel, int color) {
-    *pixel.r = color;
-    *pixel.g = color;
-    *pixel.b = color;
-}
-
 int main(int argc, char** argv)
 {
     Img pic;
@@ -66,8 +46,6 @@ int main(int argc, char** argv)
         printf("[%02X %02X %02X] ", pic.img[i].r, pic.img[i].g, pic.img[i].b);
     }
     printf("\n");
-
-    printImage(pic);
 
     free(pic.img);
 }
