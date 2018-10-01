@@ -32,6 +32,31 @@ void load(char* name, Img* pic)
     printf("Load: %d x %d x %d\n", pic->width, pic->height, chan);
 }
 
+void readImage(Img picture, int image[]) {
+    int size = picture.width * picture.height;
+    for(int index = 0; index < size; index++) {
+        int saturation = desaturatePixel(picture.img[index]);
+        image[index] = saturation;
+    }
+}
+
+int desaturatePixel(RGB pixel) {
+    int result = (0.3 * pixel.r + 0.59 * pixel.g + 0.11 * pixel.b);
+    return result;
+}
+
+void createHTML(int img[], int size) {
+	FILE *ptrFile = fopen( "index.txt", "w");
+
+	fprintf(ptrFile, "<HTML>\n ");
+
+	for(int index = 0; index < size; index++) {
+        fprintf(ptrFile, "%d", img[index]);
+    }
+
+	fclose(ptrFile);
+}
+
 int main(int argc, char** argv)
 {
     Img pic;
@@ -41,11 +66,15 @@ int main(int argc, char** argv)
     }
     load(argv[1], &pic);
 
-    printf("Primeiros 10 pixels da imagem:\n");
-    for(int i=0; i<10; i++) {
-        printf("[%02X %02X %02X] ", pic.img[i].r, pic.img[i].g, pic.img[i].b);
+    int size = pic.width * pic.height;
+    int img[size];
+    readImage(pic, img);
+
+    for(int index = 0; index < size; index++) {
+        printf("%d\n", img[index]);
     }
-    printf("\n");
+
+    createHTML(img, size);
 
     free(pic.img);
 }
